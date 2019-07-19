@@ -10,4 +10,7 @@ def create_app():
     def hello():
         return 'Hello, world!'
 
+    from . import auth
+    app.register_blueprint(auth.auth)
+    
     return app
