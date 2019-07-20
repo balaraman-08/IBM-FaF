@@ -20,10 +20,10 @@ def login():
     currentUserHandles = userHandlesCollection.find_one_and_update({'facebook': userID},
                                                                    {'$set': {
                                                                        'facebook': userID}},
+                                                                       projection={'_id': False},
                                                                    return_document=ReturnDocument.AFTER,
                                                                    upsert=True)
     # Persist in Session, remove OID and return to client
-    del currentUserHandles['_id']
     session['userHandles'] = currentUserHandles
     session['facebookAccessToken'] = facebookAccessToken
     return currentUserHandles
@@ -49,8 +49,8 @@ def connect():
     oldUserHandles = session['userHandles']
     newUserHandles = userHandlesCollection.find_one_and_update({'facebook': oldUserHandles['facebook']},
                                                                {'$set': request.json},
+                                                               projection={'_id': False},
                                                                return_document=ReturnDocument.AFTER)
     # Update Session, remove OID and return to client
-    del newUserHandles['_id']
     session['userHandles'] = newUserHandles
     return newUserHandles
