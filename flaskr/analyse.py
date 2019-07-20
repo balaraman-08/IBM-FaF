@@ -4,6 +4,7 @@ import facebook
 import tweepy
 from ibm_watson import PersonalityInsightsV3
 import os
+from operator import itemgetter
 
 analyse = Blueprint('analyse', __name__, url_prefix='/analyse')
 
@@ -84,7 +85,76 @@ def analyse_me():
 
     return profile
 
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Analyse user's friends' personality
 @analyse.route('/friends', methods=['GET'])
 def analyse_friends():
-    return 'Analyse Friends'
+    userHandles = session['userHandles']
+
+    # ------------------------------------------------------------------------------------------------
+    # Lists of top friends with these qualities percentile
+    openness = []
+    conscientiousness = []
+    extraversion = []
+    agreeableness = []
+    neuroticism = []
+    friendAffinity = []
+    consumptionPreferences = {}
+
+    myProfile = analysedUserData.find_one({'facebook': userHandles['facebook']}, {'_id': 0})['profile']
+    print(myProfile)
+    myNeeds = myProfile['needs']
+    myValues = myProfile['values']
+
+    # To classify friends based Big Five Personal Traits
+    def classify(user_id, personality):
+        openness.append({'userID': user_id, 'percentile': personality[0]['percentile']})
+        conscientiousness.append({'userID': user_id, 'percentile': personality[1]['percentile']})
+        extraversion.append({'userID': user_id, 'percentile': personality[2]['percentile']})
+        agreeableness.append({'userID': user_id, 'percentile': personality[3]['percentile']})
+        neuroticism.append({'userID': user_id, 'percentile': personality[4]['percentile']})
+
+    # To map the user's nature with his/her friends
+    def map_nature(user_id, needs, values):
+        # Get average difference in needs and value percentiles of me and my friend
+        deltaSum = 0
+        for i in range(12):
+            deltaSum += abs(needs[i]['percentile'] - myNeeds[i]['percentile'])
+        for i in range(5):
+            deltaSum += abs(values[i]['percentile'] - myValues[i]['percentile'])
+        friendAffinity.append({'userID': user_id, 'affinity': 1-(deltaSum/17)})
+    # ------------------------------------------------------------------------------------------------
+
+    # Create graph object for Facebook API
+    graph = facebook.GraphAPI(access_token=session['facebookAccessToken'])
+    
+    friends_list_without_name = []
+    friends_list_with_name = {}
+
+    friends_list_generator = graph.get_all_connections(
+        id=userHandles['facebook'], connection_name='friends')
+        
+    for friend in friends_list_generator:
+        friends_list_without_name.append(friend['id'])
+        friends_list_with_name[friend['id']] = friend['name']
+
+    # Cursor for friends analysed data
+    friends_data_cursor = analysedUserData.find(
+        {'facebook': {'$in': friends_list_without_name}}, {'_id': 0})
+
+    for data in friends_data_cursor:
+        classify(data['facebook'], data['profile']['personality'])
+        map_nature(data['facebook'], data['profile']['needs'], data['profile']['values'])
+        consumptionPreferences[data['facebook']] = data['profile']['consumption_preferences']
+
+    return {
+        'opennessRank': sorted(openness, key=itemgetter('percentile'), reverse=True),
+        'conscientiousnessRank': sorted(conscientiousness, key=itemgetter('percentile'), reverse=True),
+        'extraversionRank': sorted(extraversion, key=itemgetter('percentile'), reverse=True),
+        'agreeablenessRank': sorted(agreeableness, key=itemgetter('percentile'), reverse=True),
+        'neuroticismRank': sorted(neuroticism, key=itemgetter('percentile'), reverse=True),
+        'affinityRank': sorted(friendAffinity, key=itemgetter('affinity')),
+        'consumption_preferences': consumptionPreferences,
+        'friendsName': friends_list_with_name
+    }
