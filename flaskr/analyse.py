@@ -11,6 +11,7 @@ analyse = Blueprint('analyse', __name__, url_prefix='/analyse')
 client = MongoClient(os.getenv('DATABASE_URL'))
 db = client.ibm_faf
 userHandlesCollection = db.userHandles
+analysedUserData = db.analysedUserData
 # ----------------------------------------------------------------------------------------------------------
 
 # Tweepy ---------------------------------------------------------------------------------------------------
@@ -29,6 +30,7 @@ personality_insights = PersonalityInsightsV3(
 )
 # ----------------------------------------------------------------------------------------------------------
 
+# Analyse user's personality
 @analyse.route('/me', methods=['GET'])
 def analyse_me():
     userHandles = session['userHandles']
@@ -69,12 +71,16 @@ def analyse_me():
     # Normalize the personality insights by removing unwanted data
     profile['consumption_preferences'] = [category for category in profile['consumption_preferences'] if category['consumption_preference_category_id']
                                           in ['consumption_preferences_movie', 'consumption_preferences_music', 'consumption_preferences_reading']]
-    
+
     for category in profile['consumption_preferences']:
-        category['consumption_preferences'] = [preference for preference in category['consumption_preferences'] if preference['score'] != 0]
-    
+        category['consumption_preferences'] = [
+            preference for preference in category['consumption_preferences'] if preference['score'] != 0]
+
     for personality in profile['personality']:
         del personality['children']
+
+    analysedUserData.update({'facebook': userHandles['facebook']}, {
+                            '$set': {'profile': profile}}, upsert=True)
 
     return profile
 
