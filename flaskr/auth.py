@@ -15,6 +15,7 @@ userHandlesCollection = db.userHandles
 @auth.route('/login', methods=['POST'])
 def login():
     userID = request.json['userID']
+    facebookAccessToken = request.json['facebookAccessToken']
     # Upsert the UserID provided and get the new document
     currentUserHandles = userHandlesCollection.find_one_and_update({'facebook': userID},
                                                                    {'$set': {
@@ -24,6 +25,7 @@ def login():
     # Persist in Session, remove OID and return to client
     del currentUserHandles['_id']
     session['userHandles'] = currentUserHandles
+    session['facebookAccessToken'] = facebookAccessToken
     return currentUserHandles
 
 # Logout Route
@@ -31,6 +33,7 @@ def login():
 def logout():
     # Remove userHandles from session
     session.pop('userHandles', None)
+    session.pop('facebookAccessToken', None)
     return Response(status=200)
 
 

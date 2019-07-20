@@ -13,5 +13,8 @@ def create_app():
 
     from . import auth
     app.register_blueprint(auth.auth)
+
+    from . import analyse
+    app.register_blueprint(analyse.analyse)
     
     return app
