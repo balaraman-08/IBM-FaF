@@ -13,6 +13,7 @@ public class ConsumptionAdapter extends RecyclerView.Adapter<ConsumptionAdapter.
 
     Context context;
     int textColor=0;
+    String[] consumption = {"Adventure movies","historical movies","science-fiction"};
 
     ConsumptionAdapter(int i) {
         textColor = i;
@@ -30,8 +31,11 @@ public class ConsumptionAdapter extends RecyclerView.Adapter<ConsumptionAdapter.
     public void onBindViewHolder(@NonNull ConsumptionAdapter.ViewHolder holder, int position) {
         holder.consumptions.setText("Like to watch movies");
 
-        if (textColor==1)
+        if (textColor==1){
+            holder.consumptions.setText(consumption[position]);
             holder.consumptions.setTextColor(context.getResources().getColor(R.color.colorViolet));
+        }
+
         if (textColor==2)
             holder.consumptions.setTextColor(context.getResources().getColor(R.color.colorBlueFlash));
         if (textColor==3)
@@ -40,7 +44,7 @@ public class ConsumptionAdapter extends RecyclerView.Adapter<ConsumptionAdapter.
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 3;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

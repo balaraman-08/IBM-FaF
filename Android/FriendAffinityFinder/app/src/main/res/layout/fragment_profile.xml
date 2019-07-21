@@ -16,6 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:tint="@color/colorPrimary"
+                android:id="@+id/addTwitter"
+                android:src="@drawable/ic_add_black_24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/profilecard"/>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/profilecard"
                 android:layout_width="match_parent"

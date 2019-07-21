@@ -68,6 +68,7 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private TwitterLoginButton twitterLoginButton;
+    ImageView twitterLogin;
     //Progress bars
     private ProgressBar pr_open, pr_diligence, pr_extraversion, pr_emotional, pr_agreeableness;
 
@@ -142,6 +143,13 @@ public class ProfileFragment extends Fragment {
         profileCard.setBackgroundResource(R.drawable.heading_tags);
         bigTraitsCard = v.findViewById(R.id.progressCircles);
         valuesCard = v.findViewById(R.id.values_card);
+        twitterLogin = v.findViewById(R.id.addTwitter);
+        twitterLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomActivity(view);
+            }
+        });
         needCard = v.findViewById(R.id.need_card);
 
         needs = new JSONArray();
