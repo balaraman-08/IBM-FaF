@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!--Challenge-->
+    <TextView
+        android:id="@+id/need_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textColor="@color/colorGreenDark"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/need_percentile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="Percentile"
+        android:textColor="@color/colorGreenDark"
+        android:textSize="18sp" />
+
+    <ProgressBar
+        android:id="@+id/need_progress"
+        style="@style/MyProgressBarTwo"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/need_name"
+        android:layout_marginTop="8dp"
+        android:progress="30"
+        android:progressTint="@color/colorAccent"
+        android:secondaryProgress="60"
+        android:theme="@style/MyProgressBarTwo" />
+
+</RelativeLayout>

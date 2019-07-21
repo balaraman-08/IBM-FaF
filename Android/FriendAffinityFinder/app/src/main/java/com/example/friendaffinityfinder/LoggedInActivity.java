@@ -24,7 +24,6 @@ public class LoggedInActivity extends AppCompatActivity {
 
     TwitterLoginButton twitterLoginButton;
     SharedPreferences sharedPreferences;
-    MainActivity mainActivity;
     TextView name_t,gender_t,birthday_t,email_t,location_t;
 
     @Override

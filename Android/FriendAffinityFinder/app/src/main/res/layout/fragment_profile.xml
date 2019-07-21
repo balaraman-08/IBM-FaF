@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,14 +12,14 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_width="match_parent"
             android:id="@+id/picandnamecard"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/profilecard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/profilecard"
                 android:layout_centerHorizontal="true"
                 app:cardBackgroundColor="@color/colorWhite"
                 app:cardElevation="8dp">
@@ -27,12 +28,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="PROFILE"
                     android:layout_margin="8dp"
-                    android:textStyle="bold"
+                    android:text="PROFILE"
                     android:textAlignment="center"
                     android:textColor="@color/colorBlack"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
 
             <!--Profile -->
@@ -40,10 +41,10 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="200dp"
-                android:layout_marginTop="20dp"
                 android:layout_below="@+id/profilecard"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/picturecard"
@@ -65,15 +66,15 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/name_txt"
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/picturecard"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="12dp"
-                    android:fontFamily="@font/amita"
-                    android:text="Rahul Raj K"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Username"
                     android:textAlignment="center"
                     android:textColor="@color/colorBlack"
                     android:textSize="22sp"
@@ -85,21 +86,54 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/analysing_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/picandnamecard"
+            android:layout_marginTop="48dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Analysing your data..."
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/picandnamecard"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Something went wrong\nReasons:\n\t\tCheck your internet connection\n\t\tMaybe insufficient posts"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <!--CardView for big five traits-->
         <androidx.cardview.widget.CardView
             android:id="@+id/progressCircles"
             android:layout_width="match_parent"
-            android:layout_marginTop="-200dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/picandnamecard"
-            android:visibility="visible"
             android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
             android:padding="8dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="12dp"
+            android:visibility="gone"
             app:cardBackgroundColor="@color/colorWhite"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp">
@@ -142,17 +176,17 @@
                                 android:layout_marginTop="8dp"
                                 android:indeterminate="false"
                                 android:max="100"
-                                android:progress="0"
+                                android:progress="72"
                                 android:progressDrawable="@drawable/progress_openness"
                                 android:secondaryProgress="0" />
 
                             <TextView
+                                android:id="@+id/pr_open_no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:fontFamily="@font/montserrat"
                                 android:gravity="center"
-                                android:id="@+id/pr_open_no"
                                 android:text="72"
                                 android:textColor="@color/colorBlue"
                                 android:textSize="28sp" />
@@ -200,18 +234,17 @@
                                 android:layout_marginTop="8dp"
                                 android:indeterminate="false"
                                 android:max="100"
-                                android:progress="0"
-                                android:progressDrawable="@drawable/progress_diligence"
-                                android:secondaryProgress="0" />
+                                android:progress="92"
+                                android:progressDrawable="@drawable/progress_diligence" />
 
                             <TextView
+                                android:id="@+id/pr_diligence_no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:fontFamily="@font/montserrat"
                                 android:gravity="center"
                                 android:text="92"
-                                android:id="@+id/pr_diligence_no"
                                 android:textColor="@color/colorBlue"
                                 android:textSize="28sp" />
 
@@ -271,17 +304,16 @@
                                 android:layout_marginTop="4dp"
                                 android:indeterminate="false"
                                 android:max="100"
-                                android:progress="0"
-                                android:progressDrawable="@drawable/progress_extraversion"
-                                android:secondaryProgress="0" />
+                                android:progress="72"
+                                android:progressDrawable="@drawable/progress_extraversion" />
 
                             <TextView
+                                android:id="@+id/pr_extra_no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:fontFamily="@font/montserrat"
                                 android:gravity="center"
-                                android:id="@+id/pr_extra_no"
                                 android:text="72"
                                 android:textColor="@color/colorBlue"
                                 android:textSize="28sp" />
@@ -342,16 +374,15 @@
                                 android:layout_marginTop="4dp"
                                 android:indeterminate="false"
                                 android:max="100"
-                                android:progress="0"
-                                android:progressDrawable="@drawable/progress_agreeable"
-                                android:secondaryProgress="0" />
+                                android:progress="72"
+                                android:progressDrawable="@drawable/progress_agreeable" />
 
                             <TextView
+                                android:id="@+id/pr_agree_no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:fontFamily="@font/montserrat"
-                                android:id="@+id/pr_agree_no"
                                 android:gravity="center"
                                 android:text="72"
                                 android:textColor="@color/colorBlue"
@@ -401,18 +432,17 @@
                                 android:layout_marginTop="4dp"
                                 android:indeterminate="false"
                                 android:max="100"
-                                android:progress="0"
-                                android:progressDrawable="@drawable/progress_emotion"
-                                android:secondaryProgress="0" />
+                                android:progress="95"
+                                android:progressDrawable="@drawable/progress_emotion" />
 
                             <TextView
+                                android:id="@+id/pr_emotion_no"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:fontFamily="@font/montserrat"
                                 android:gravity="center"
                                 android:text="92"
-                                android:id="@+id/pr_emotion_no"
                                 android:textColor="@color/colorBlue"
                                 android:textSize="28sp" />
 
@@ -444,18 +474,17 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/navigate_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/navigate_value"
                     android:layout_below="@+id/row3"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="8dp"
-                    android:tint="@color/colorRed"
-                    android:src="@drawable/ic_navigate_next_black_24dp"/>
+                    android:src="@drawable/ic_navigate_next_black_24dp"
+                    android:tint="@color/colorRed" />
 
 
             </RelativeLayout>
-
 
 
         </androidx.cardview.widget.CardView>
@@ -466,15 +495,12 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/values_card"
             android:layout_width="match_parent"
-            android:layout_marginTop="-200dp"
-            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_below="@+id/picandnamecard"
             android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
             android:padding="8dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="12dp"
+            android:visibility="gone"
             app:cardBackgroundColor="@color/colorWhite"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp">
@@ -483,193 +509,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="8dp"
-                >
+                android:visibility="visible">
 
-                <!--Conservation-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/cons_txt"
-                    android:textColor="@color/colorGreenDark"
-                    android:text="Conservation"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/const_pr_no"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorGreenDark"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/const_pr"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorGreenDark"
-                    android:layout_below="@+id/cons_txt"
-                    android:layout_marginTop="8dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/value_list"
                     android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-                <!--Openness to Change-->
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/const_pr"
-                    android:id="@+id/o_c_txt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorViolet"
-                    android:text="Openness to change"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/o_c_pr_no"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/const_pr"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorViolet"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/o_c_pr"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorViolet"
-                    android:layout_below="@+id/o_c_pr_no"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-                <!--Hedonism-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/o_c_pr"
-                    android:id="@+id/hedo_txt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorPrimary"
-                    android:text="Hedonism"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/hedo_pr_no"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/o_c_pr"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorPrimary"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/hedo_pr"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorPrimary"
-                    android:layout_below="@+id/hedo_pr_no"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-                <!--Self-enhancement-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/hedo_pr"
-                    android:id="@+id/self_e_txt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorAccent"
-                    android:text="Self-enhancement"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/self_e_no"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/hedo_pr"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorAccent"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/self_e_pro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorAccent"
-                    android:layout_below="@+id/self_e_no"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-                <!--Self-transcendence-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/self_e_pro"
-                    android:id="@+id/self_t_txt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorOrange"
-                    android:text="Self-transcendence"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/self_t_no"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/self_e_pro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorOrange"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/self_t_pro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorOrange"
-                    android:layout_below="@+id/self_t_no"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-
-
+                    tools:itemCount="5"
+                    tools:listitem="@layout/needs_progress_view" />
 
                 <ImageView
+                    android:id="@+id/navigate_need"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/navigate_need"
+                    android:layout_below="@+id/value_list"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="8dp"
-                    android:tint="@color/colorGreenDark"
-                    android:layout_below="@+id/self_t_pro"
-                    android:src="@drawable/ic_navigate_next_black_24dp"/>
+                    android:src="@drawable/ic_navigate_next_black_24dp"
+                    android:tint="@color/colorGreenDark" />
 
             </RelativeLayout>
-
-
 
         </androidx.cardview.widget.CardView>
 
@@ -680,15 +539,12 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/need_card"
             android:layout_width="match_parent"
-            android:layout_marginTop="-200dp"
-            android:visibility="gone"
             android:layout_height="wrap_content"
             android:layout_below="@+id/picandnamecard"
             android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
             android:padding="8dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="12dp"
+            android:visibility="gone"
             app:cardBackgroundColor="@color/colorWhite"
             app:cardCornerRadius="8dp"
             app:cardElevation="8dp">
@@ -697,436 +553,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="8dp"
-                >
+                android:visibility="visible">
 
-                <!--Challenge-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/challengetxt"
-                    android:textColor="@color/colorGreenDark"
-                    android:text="Challenge"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/challengeno"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorGreenDark"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/challengepro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorGreenDark"
-                    android:layout_below="@+id/challengeno"
-                    android:layout_marginTop="8dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/need_list"
                     android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-                <!--Closeness-->
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/challengepro"
-                    android:id="@+id/closenesstxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorViolet"
-                    android:text="Closeness"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/closenessno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/challengepro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorViolet"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/closenesspro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorViolet"
-                    android:layout_below="@+id/closenessno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-                <!--Curiosity-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/closenesspro"
-                    android:id="@+id/curiositytxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorPrimary"
-                    android:text="Curiosity"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/curiosityno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/closenesspro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorPrimary"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/curiositypro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorPrimary"
-                    android:layout_below="@+id/curiosityno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-                <!--Excitement-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/curiositypro"
-                    android:id="@+id/excitementtxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorAccent"
-                    android:text="Excitement"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/excitementno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/curiositypro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorAccent"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/excitementpro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorAccent"
-                    android:layout_below="@+id/excitementno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-                <!--Harmony-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/excitementpro"
-                    android:id="@+id/harmonytxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorOrange"
-                    android:text="Harmony"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/harmonyno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/excitementpro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorOrange"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/harmonypro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorOrange"
-                    android:layout_below="@+id/harmonyno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-                <!--Liberty-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/harmonypro"
-                    android:id="@+id/libertytxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorOrange"
-                    android:text="Liberty"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/libertyno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/harmonypro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorOrange"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/libertypro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorOrange"
-                    android:layout_below="@+id/libertyno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-                <!--Ideal-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/libertypro"
-                    android:id="@+id/ideal"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorPrimary"
-                    android:text="Ideal"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/idealno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/libertypro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorPrimary"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/idealpro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorPrimary"
-                    android:layout_below="@+id/idealno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-                <!--Love-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/idealpro"
-                    android:id="@+id/lovetxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorAccent"
-                    android:text="Love"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/loveno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/idealpro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorAccent"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/lovepro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorAccent"
-                    android:layout_below="@+id/loveno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-                <!--Practicality-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/lovepro"
-                    android:id="@+id/practicalitytxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorGreen"
-                    android:text="Practicality"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/practicalityno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/lovepro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorOrange"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/practicalitypro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorGreen"
-                    android:layout_below="@+id/practicalityno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-                <!--Self-expression-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/practicalitypro"
-                    android:id="@+id/selfexpressiontxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorViolet"
-                    android:text="Self-expression"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/selfexpressionno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/practicalitypro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorViolet"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/selfexpressionpro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorViolet"
-                    android:layout_below="@+id/selfexpressionno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-
-                <!--Stability-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/selfexpressionpro"
-                    android:id="@+id/stabilitytxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorPrimary"
-                    android:text="Stability"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/stabilityno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/selfexpressionpro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorPrimary"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/stabilitypro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorPrimary"
-                    android:layout_below="@+id/stabilityno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
-                <!--Structure-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_below="@+id/stabilitypro"
-                    android:id="@+id/structuretxt"
-                    android:layout_marginTop="18dp"
-                    android:textColor="@color/colorAccent"
-                    android:text="Structure"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:id="@+id/structureno"
-                    android:layout_marginTop="16dp"
-                    android:layout_below="@+id/stabilitypro"
-                    android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorAccent"
-                    android:text="78"/>
-
-                <ProgressBar
-                    android:id="@+id/structurepro"
-                    style="@style/MyProgressBarTwo"
-                    android:layout_height="wrap_content"
-                    android:progressTint="@color/colorAccent"
-                    android:layout_below="@+id/structureno"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:theme="@style/MyProgressBarTwo"
-                    android:progress="30"
-                    android:secondaryProgress="60"/>
-
+                    tools:itemCount="12"
+                    tools:listitem="@layout/needs_progress_view" />
 
                 <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/navigate_personality"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="8dp"
-                android:tint="@color/colorBlueFlash"
-                android:layout_below="@+id/structurepro"
-                android:src="@drawable/ic_navigate_next_black_24dp"/>
+                    android:id="@+id/navigate_personality"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/need_list"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/ic_navigate_next_black_24dp"
+                    android:tint="@color/colorBlueFlash" />
 
             </RelativeLayout>
-
-
 
         </androidx.cardview.widget.CardView>
 
 
     </RelativeLayout>
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

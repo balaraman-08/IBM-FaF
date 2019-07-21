@@ -27,6 +27,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.android.volley:volley:1.1.1'
     //Include the facebook APIs
     implementation 'com.facebook.android:facebook-login:[5,6)'
     // Include all the Twitter APIs
