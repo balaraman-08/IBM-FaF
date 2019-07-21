@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar1"
+        tools:ignore="MissingConstraints">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Home"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                android:id="@+id/titletoolbar"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="@font/montserrat"
+                android:textSize="20sp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"
+                android:tint="@color/colorWhite"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/logout"
+                android:src="@drawable/ic_exit_to_app_black_24dp"
+                />
+        </RelativeLayout>
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar1"
+        android:layout_above="@+id/navigation"
+        android:layout_height="match_parent"
+        />
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/default_twitter_login_button"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="18dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:visibility="invisible"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        app:elevation="8dp"
+        app:itemIconTint="@drawable/bottom_navigation_colors"
+        app:itemTextColor="@drawable/bottom_navigation_colors"
+        app:menu="@menu/navigation" />
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

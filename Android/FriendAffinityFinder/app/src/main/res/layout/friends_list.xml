@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/requestcard"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="1dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/picturecard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="8dp">
+
+                <com.facebook.login.widget.ProfilePictureView
+                    android:id="@+id/friendProfilePicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    facebook:com_facebook_preset_size="normal" />
+
+            </androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/friend_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Rahul Raj K"
+                android:maxLines="2"
+                android:textColor="@color/colorBlack"
+                android:layout_marginTop="4dp"
+                android:textSize="18sp"
+                android:layout_toEndOf="@+id/picturecard"
+                android:textStyle="bold" />
+
+            </RelativeLayout>
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>
+
