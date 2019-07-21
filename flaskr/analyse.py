@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, Response
+from flask import Blueprint, request, session, Response, abort
 from pymongo import MongoClient, ReturnDocument
 import facebook
 import tweepy
@@ -34,6 +34,13 @@ personality_insights = PersonalityInsightsV3(
 # Analyse user's personality
 @analyse.route('/me', methods=['GET'])
 def analyse_me():
+    """ Analyses my personality from social media posts using Watson Personality Insights
+        and stores that into the database before returning
+    """
+
+    if(not session):
+        abort(401)
+
     userHandles = session['userHandles']
 
     # Create a file to save user posts
@@ -80,6 +87,7 @@ def analyse_me():
     for personality in profile['personality']:
         del personality['children']
 
+    # Store in the MongoDB collection
     analysedUserData.update({'facebook': userHandles['facebook']}, {
                             '$set': {'profile': profile}}, upsert=True)
 
@@ -90,6 +98,13 @@ def analyse_me():
 # Analyse user's friends' personality
 @analyse.route('/friends', methods=['GET'])
 def analyse_friends():
+    """ Compare my friends' personalities, retrieved from their own analysedUserData in MongoDB,
+        with my own personality traits, in order to generate different rank lists based on that.
+    """
+
+    if(not session):
+        abort(401)
+
     userHandles = session['userHandles']
 
     # ------------------------------------------------------------------------------------------------
@@ -101,23 +116,31 @@ def analyse_friends():
     neuroticism = []
     friendAffinity = []
     consumptionPreferences = {}
-
+    
+    # Get my personality profile
     myProfile = analysedUserData.find_one({'facebook': userHandles['facebook']}, {'_id': 0})['profile']
-    print(myProfile)
     myNeeds = myProfile['needs']
     myValues = myProfile['values']
 
-    # To classify friends based Big Five Personal Traits
     def classify(user_id, personality):
+        """ Helper function to split the Big 5 percentile values of each friend
+            into a separte list of their own
+        """
         openness.append({'userID': user_id, 'percentile': personality[0]['percentile']})
         conscientiousness.append({'userID': user_id, 'percentile': personality[1]['percentile']})
         extraversion.append({'userID': user_id, 'percentile': personality[2]['percentile']})
         agreeableness.append({'userID': user_id, 'percentile': personality[3]['percentile']})
         neuroticism.append({'userID': user_id, 'percentile': personality[4]['percentile']})
 
-    # To map the user's nature with his/her friends
     def map_nature(user_id, needs, values):
-        # Get average difference in needs and value percentiles of me and my friend
+        """ Helper function to find the friend affinity driven by needs and values
+
+            It finds the average absolute difference in needs and value percentiles of me and my friend,
+            i.e, the percentile by which we differ in character,
+            and complements it to get the percentile by which we match, i.e., our affinity.
+            This value is put in a list along with friend's ID.
+        """
+        # Get 
         deltaSum = 0
         for i in range(12):
             deltaSum += abs(needs[i]['percentile'] - myNeeds[i]['percentile'])
@@ -132,29 +155,37 @@ def analyse_friends():
     friends_list_without_name = []
     friends_list_with_name = {}
 
+    # Get all my friends who are using the application
     friends_list_generator = graph.get_all_connections(
         id=userHandles['facebook'], connection_name='friends')
-        
+
+    # Generate two lists of my friends    
     for friend in friends_list_generator:
         friends_list_without_name.append(friend['id'])
         friends_list_with_name[friend['id']] = friend['name']
 
-    # Cursor for friends analysed data
+    # MongoDB cursor for all my friends analysed data
     friends_data_cursor = analysedUserData.find(
         {'facebook': {'$in': friends_list_without_name}}, {'_id': 0})
 
     for data in friends_data_cursor:
+        """For each personality data of each of my friend,
+            use the helper functions to generate the unique lists
+        """
         classify(data['facebook'], data['profile']['personality'])
         map_nature(data['facebook'], data['profile']['needs'], data['profile']['values'])
         consumptionPreferences[data['facebook']] = data['profile']['consumption_preferences']
 
+    """ Finally generate the rank list for each of the trait
+        and return along with other helper data
+    """
     return {
         'opennessRank': sorted(openness, key=itemgetter('percentile'), reverse=True),
         'conscientiousnessRank': sorted(conscientiousness, key=itemgetter('percentile'), reverse=True),
         'extraversionRank': sorted(extraversion, key=itemgetter('percentile'), reverse=True),
         'agreeablenessRank': sorted(agreeableness, key=itemgetter('percentile'), reverse=True),
         'neuroticismRank': sorted(neuroticism, key=itemgetter('percentile'), reverse=True),
-        'affinityRank': sorted(friendAffinity, key=itemgetter('affinity')),
+        'affinityRank': sorted(friendAffinity, key=itemgetter('affinity'), reversed=True),
         'consumption_preferences': consumptionPreferences,
         'friendsName': friends_list_with_name
     }
