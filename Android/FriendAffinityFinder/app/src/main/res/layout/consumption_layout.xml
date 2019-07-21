@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/preferences_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:cardBackgroundColor="@color/colorWhite"
+            app:cardElevation="8dp">
+
+
+
+            <ImageView
+                android:layout_width="25dp"
+                android:id="@+id/close_consumption"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_close_black_24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp"
+                android:padding="4dp"
+                android:text="Preferences"
+                android:fontFamily="@font/montserrat"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_below="@+id/preferences_heading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:padding="8dp"
+                android:layout_height="wrap_content">
+                <!--Openness Card-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/movie_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+
+                        <TextView
+                            android:id="@+id/movieheading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/montserrat"
+                            android:paddingStart="22sp"
+                            android:paddingEnd="22sp"
+                            android:text="Movies"
+                            android:textColor="@color/colorViolet"
+                            android:textSize="24sp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_movie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/movieheading"
+                            android:visibility="visible"
+                            tools:itemCount="5"
+                            tools:listitem="@layout/consumption_recycler" />
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <!--Conscientiousness-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/music_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/movie_card"
+                    android:layout_marginBottom="12dp"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+
+
+                        <TextView
+                            android:id="@+id/musicheading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/montserrat"
+                            android:paddingStart="22sp"
+                            android:paddingEnd="22sp"
+                            android:text="Music"
+                            android:textColor="@color/colorBlueFlash"
+                            android:textSize="24sp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_music"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/musicheading"
+                            android:visibility="visible"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/consumption_recycler" />
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <!--Extraversion-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/book_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/music_card"
+                    android:layout_marginBottom="12dp"
+                    android:clickable="true"
+                    android:elevation="4dp"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="4dp">
+
+
+                        <TextView
+                            android:id="@+id/bookheading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/montserrat"
+                            android:paddingStart="22sp"
+                            android:paddingEnd="22sp"
+                            android:text="Books"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="24sp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyler_books"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/bookheading"
+                            android:visibility="visible"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/consumption_recycler" />
+                    </RelativeLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>
+

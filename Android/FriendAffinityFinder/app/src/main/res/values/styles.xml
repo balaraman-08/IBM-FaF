@@ -19,4 +19,11 @@
     </style>
 
 
+    <style name="TabDesign" parent="@style/Widget.Design.TabLayout">
+        <item name="colorAccent">@color/colorBlueFlash</item>
+    </style>
+
+
+
+
 </resources>

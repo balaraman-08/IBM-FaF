@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Big5Fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/heading_big5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:cardBackgroundColor="@color/colorWhite"
+        app:cardElevation="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
+            android:padding="4dp"
+            android:text="BIG 5 TRAITS"
+            android:fontFamily="@font/montserrat"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/heading_big5"
+        tools:context=".Big5Fragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:layout_height="wrap_content">
+            <!--Openness Card-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/open_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/big_open"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/montserrat"
+                        android:paddingStart="22sp"
+                        android:paddingEnd="22sp"
+                        android:text="Openness"
+                        android:textColor="@color/colorViolet"
+                        android:textSize="24sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_openness"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/big_open"
+                        android:paddingBottom="35dp"
+                        android:visibility="gone"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/big5_list_layout" />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <!--Conscientiousness-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/conscience_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/open_card"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+
+                    <TextView
+                        android:id="@+id/big_conscience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/montserrat"
+                        android:paddingStart="22sp"
+                        android:paddingEnd="22sp"
+                        android:text="Conscientiousness"
+                        android:textColor="@color/colorBlueFlash"
+                        android:textSize="24sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_conscience"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/big_conscience"
+                        android:paddingBottom="35dp"
+                        android:visibility="gone"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/big5_list_layout" />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <!--Extraversion-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/extra_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/conscience_card"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+
+                    <TextView
+                        android:id="@+id/big_extra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/montserrat"
+                        android:paddingStart="22sp"
+                        android:paddingEnd="22sp"
+                        android:text="Extraversion"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_extra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/big_extra"
+                        android:paddingBottom="35dp"
+                        android:visibility="gone"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/big5_list_layout" />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <!--Agreeableness-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/agree_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/extra_card"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+
+                    <TextView
+                        android:id="@+id/big_agree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/montserrat"
+                        android:paddingStart="22sp"
+                        android:paddingEnd="22sp"
+                        android:text="Agreeableness"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="24sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_agree"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/big_agree"
+                        android:paddingBottom="35dp"
+                        android:visibility="gone"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/big5_list_layout" />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <!--Emotional Range-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/emotion_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/agree_card"
+                android:layout_marginBottom="12dp"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="4dp">
+
+
+                    <TextView
+                        android:id="@+id/big_emotion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/montserrat"
+                        android:paddingStart="22sp"
+                        android:paddingEnd="22sp"
+                        android:text="Emotional Range"
+                        android:textColor="@color/colorLightYello"
+                        android:textSize="24sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_emotion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/big_emotion"
+                        android:paddingBottom="35dp"
+                        android:visibility="gone"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/big5_list_layout" />
+                </RelativeLayout>
+
+
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

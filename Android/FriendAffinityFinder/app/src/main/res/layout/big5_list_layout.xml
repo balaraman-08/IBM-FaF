@@ -9,7 +9,7 @@
     android:paddingRight="10dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/friends_card"
+        android:id="@+id/requestcard"
         android:layout_marginBottom="1dp"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -44,8 +44,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_toEndOf="@+id/picturecard"
+                android:layout_toStartOf="@+id/percentage_big5"
                 android:layout_centerInParent="true"
-                android:layout_toStartOf="@+id/percentage_affinity"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -67,26 +67,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="72%"
                 android:layout_alignParentEnd="true"
+                android:text="72"
                 android:textSize="30sp"
-                android:fontFamily="@font/bree_serif"
-                android:layout_centerVertical="true"
-                android:id="@+id/percentage_affinity"
-                />
+                android:fontFamily="sans-serif"
+                android:id="@+id/percentage_big5"
+                android:layout_centerVertical="true"/>
 
 
-            </RelativeLayout>
-
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <View
-        android:layout_width="match_parent"
-        android:background="@color/colorBlueFlash"
-        android:layout_below="@id/friends_card"
-        android:id="@+id/view_bottom"
-        android:layout_height="1dp"/>
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_below="@id/requestcard"-->
+        <!--android:id="@+id/view_bottom"-->
+        <!--android:layout_height="1dp"/>-->
+
 
 
 </RelativeLayout>

@@ -1,7 +1,17 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/colorBlue" />
+    <solid android:color="@color/colorBlueFlash" />
     <corners
-        android:bottomRightRadius="75dp"
-        android:topRightRadius="75dp"/>
+        android:bottomLeftRadius="50dp"
+        android:bottomRightRadius="50dp" />
 </shape>
+
+
+
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+    <!--<solid android:color="@color/colorBlue" />-->
+<!--<corners-->
+    <!--android:bottomRightRadius="75dp"-->
+    <!--android:topRightRadius="75dp"/>-->
+<!--</shape>-->
