@@ -8,8 +8,8 @@ The project uses a Python Flask server, a MongoDB Cluster and an Android applica
 
  - [Balaraman M](https://github.com/balaraman-08) -- Team Lead
  - [Ganesh Ramkumar R](https://github.com/Science001) -- Back end Developer
- - Gowtham C -- Back end Developer
- - Rahul Raj K -- Front end Developer
+ - [Gowtham C](https://github.com/littleboy1103) -- Back end Developer
+ - [Rahul Raj K](https://github.com/rahulrajk) -- Front end Developer
 
 ## Running the server
 Once you have cloned the project repository, install the following Python modules:
@@ -22,8 +22,28 @@ Once you have cloned the project repository, install the following Python module
     
 Once the modules are installed, start the server by issuing the following command:
 
-    python -m flask run
+    python -m flask run -h 0.0.0.0
 
 The server will be up and running and can be accessed at port 5000 of localhost, by default.
 
+To change the port:
+
+    python -m flask run -h 0.0.0.0 -p PORT_NUMBER
+
 ## Connecting application to server
+To run the application, install [Android Studio](https://developer.android.com/studio)
+
+If installed, open Android/FriendAffinityFinder in Android Studio
+
+To connect your flask server, follow the steps below:
+
+
+1. Navigate to `Android/FriendAffinityFinder/app/src/main/res/values/strings.xml`
+
+2. Find IP address of the system running the server
+
+3. Change `<string name="URL">http://192.168.43.245:5000</string>` to `<string name="URL"><YOUR_IP_ADDRESS>:5000</string>`. If you're running on custom port, change `5000` to your `PORT_NUMBER`
+ 
+4. **Connect Test Device to same network as the server**
+
+5. Run the application from Android Studio
