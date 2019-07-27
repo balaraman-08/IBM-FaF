@@ -47,3 +47,13 @@ To connect your flask server, follow the steps below:
 4. **Connect Test Device to same network as the server**
 
 5. Run the application from Android Studio
+
+## Test Users
+Since Facebook API is in Development mode, regular users cannot log in. So use the following test users while testing
+
+| Email | Password |
+| --- | --- |
+| vcqapfably_1563655783@tfbnw.net | sheismytestuser |
+| uihomikxdx_1563655781@tfbnw.net | heismytestuser |
+| igsayguwjq_1563351256@tfbnw.net | sheismytestuser |
+| open_kfbmyjv_user@tfbnw.net | heismytestuser |
