@@ -47,5 +47,7 @@ def create_app():
 
     from . import analyse
     app.register_blueprint(analyse.analyse)
+
+    app.run(host='0.0.0.0')
     
     return app

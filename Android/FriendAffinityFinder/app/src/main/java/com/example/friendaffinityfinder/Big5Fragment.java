@@ -1,6 +1,7 @@
 package com.example.friendaffinityfinder;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,10 +10,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -36,11 +42,18 @@ public class Big5Fragment extends Fragment {
     private CardView openCard,conscienceCard,extraCard,agreeCard,emotionCard,headingCard;
     private RecyclerView recyclerOpen,recyclerConscience,recyclerExtra,recyclerAgree,recyclerEmotion;
     private TextView bigOpen,bigcConscience,bigExtra,bigAgree,bigEmotion;
+    JSONArray opennessRank;
+    JSONArray conscientiousnessRank;
+    JSONArray extraversionRank;
+    JSONArray agreeablenessRank;
+    JSONArray neuroticismRank;
+    JSONObject friendsName;
 
     //Functioning
     private int open = 1,conscience=1,extra=1,agree=1,emotion=1;
 
     private OnFragmentInteractionListener mListener;
+    private SharedPreferences sharedPreferences;
 
     public Big5Fragment() {
         // Required empty public constructor
@@ -78,8 +91,19 @@ public class Big5Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_big5, container, false);
+        sharedPreferences = getActivity().getSharedPreferences("myPref",Context.MODE_PRIVATE);
+        try {
+            opennessRank = new JSONArray(sharedPreferences.getString("opennessRank",""));
+            conscientiousnessRank = new JSONArray(sharedPreferences.getString("conscientiousnessRank",""));
+            extraversionRank = new JSONArray(sharedPreferences.getString("extraversionRank",""));
+            agreeablenessRank = new JSONArray(sharedPreferences.getString("agreeablenessRank",""));
+            neuroticismRank = new JSONArray(sharedPreferences.getString("neuroticismRank",""));
+            friendsName = new JSONObject(sharedPreferences.getString("friendsName",""));
 
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         //CardViews
         openCard = v.findViewById(R.id.open_card);
         conscienceCard = v.findViewById(R.id.conscience_card);
@@ -125,7 +149,7 @@ public class Big5Fragment extends Fragment {
                     recyclerEmotion.setVisibility(View.GONE);
                     recyclerOpen.setHasFixedSize(true);
                     recyclerOpen.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerOpen.setAdapter(new Big5Adapter(1));
+                    recyclerOpen.setAdapter(new Big5Adapter(opennessRank, friendsName));
                     open=2;
                 }
                 else{
@@ -149,7 +173,7 @@ public class Big5Fragment extends Fragment {
                     recyclerEmotion.setVisibility(View.GONE);
                     recyclerConscience.setHasFixedSize(true);
                     recyclerConscience.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerConscience.setAdapter(new Big5Adapter(2));
+                    recyclerConscience.setAdapter(new Big5Adapter(conscientiousnessRank, friendsName));
 
                 }
                 else{
@@ -173,7 +197,7 @@ public class Big5Fragment extends Fragment {
                     recyclerEmotion.setVisibility(View.GONE);
                     recyclerExtra.setHasFixedSize(true);
                     recyclerExtra.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerExtra.setAdapter(new Big5Adapter(3));
+                    recyclerExtra.setAdapter(new Big5Adapter(extraversionRank, friendsName));
 
                 }
                 else{
@@ -197,7 +221,7 @@ public class Big5Fragment extends Fragment {
                     recyclerEmotion.setVisibility(View.GONE);
                     recyclerAgree.setHasFixedSize(true);
                     recyclerAgree.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerAgree.setAdapter(new Big5Adapter(4));
+                    recyclerAgree.setAdapter(new Big5Adapter(agreeablenessRank, friendsName));
 
                 }
                 else{
@@ -221,7 +245,7 @@ public class Big5Fragment extends Fragment {
                     recyclerEmotion.setVisibility(View.VISIBLE);
                     recyclerEmotion.setHasFixedSize(true);
                     recyclerEmotion.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    recyclerEmotion.setAdapter(new Big5Adapter(5));
+                    recyclerEmotion.setAdapter(new Big5Adapter(neuroticismRank, friendsName));
 
                 }
                 else{

@@ -1,23 +1,17 @@
 package com.example.friendaffinityfinder;
-
 import android.app.Activity;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-
 /**
  * Created by BALARAMAN on 21-07-2019 with love.
  */
@@ -31,11 +25,10 @@ public class NeedsListAdapter extends RecyclerView.Adapter<NeedsListAdapter.Need
         this.needs = needs;
         this.colors = new ArrayList<>();
         colors.add(R.color.colorViolet);
-        colors.add(R.color.colorGreenDark);
+        colors.add(R.color.colorGreen);
         colors.add(R.color.colorPrimary);
         colors.add(R.color.colorAccent);
         colors.add(R.color.colorOrange);
-
     }
 
     void updateList(JSONArray needs) {

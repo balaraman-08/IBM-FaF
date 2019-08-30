@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +31,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import static android.content.Context.MODE_PRIVATE;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,6 +58,7 @@ public class FriendsFragment extends Fragment implements AffinityFragment.OnFrag
     private AffinityNotifier affinityNotifier;
     private Big5Notifier big5Notifier;
     private SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -95,7 +97,7 @@ public class FriendsFragment extends Fragment implements AffinityFragment.OnFrag
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         sharedPreferences = getActivity().getSharedPreferences("myPref", MODE_PRIVATE);
-
+        editor = sharedPreferences.edit();
         f_viewpager = v.findViewById(R.id.friends_viewpager);
         f_tablayout = v.findViewById(R.id.friends_tab);
         f_tablayout.addTab(f_tablayout.newTab().setText("Affinity"), 0);
@@ -127,7 +129,6 @@ public class FriendsFragment extends Fragment implements AffinityFragment.OnFrag
 
 
 
-
     private void getFriendsAnalyse() {
         JsonObjectRequest my_analyse_request = new JsonObjectRequest(Request.Method.GET,
                 getResources().getString(R.string.URL) + "/analyse/friends",
@@ -136,6 +137,45 @@ public class FriendsFragment extends Fragment implements AffinityFragment.OnFrag
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("Analyse", "onResponse: " + response.toString());
+                        editor.putString("friendsData",response.toString());
+                        Log.e("analyseddata",sharedPreferences.getString("friendsData",""));
+                        try {
+                            JSONArray opennessRank = response.getJSONArray("opennessRank");
+                            JSONArray conscientiousnessRank = response.getJSONArray("conscientiousnessRank");
+                            JSONArray extraversionRank = response.getJSONArray("extraversionRank");
+                            JSONArray agreeablenessRank = response.getJSONArray("agreeablenessRank");
+                            JSONArray neuroticismRank = response.getJSONArray("neuroticismRank");
+                            JSONArray affinityRank = response.getJSONArray("affinityRank");
+                            JSONObject consumption_preferences = response.getJSONObject("consumption_preferences");
+                            JSONObject friendsName = response.getJSONObject("friendsName");
+
+                            //Storing in shared preferences
+                            editor.putString("opennessRank",opennessRank.toString());
+                            editor.putString("conscientiousnessRank",conscientiousnessRank.toString());
+                            editor.putString("extraversionRank",extraversionRank.toString());
+                            editor.putString("agreeablenessRank",agreeablenessRank.toString());
+                            editor.putString("neuroticismRank",neuroticismRank.toString());
+                            editor.putString("affinityRank",affinityRank.toString());
+                            editor.putString("consumption_preferences",consumption_preferences.toString());
+                            editor.putString("friendsName",friendsName.toString());
+                            editor.apply();
+
+
+//                            Log.d("opennessRank",opennessRank.toString());
+//                            Log.d("opennessRank",opennessRank.toString());
+//                            Log.d("conscientiousnessRank",conscientiousnessRank.toString());
+//                            Log.d("extraversionRank",extraversionRank.toString());
+//                            Log.d("agreeablenessRank",agreeablenessRank.toString());
+//                            Log.d("neuroticismRank",neuroticismRank.toString());
+//                            Log.d("affinityRank",affinityRank.toString());
+//                            Log.d("consumption_preferences",consumption_preferences.toString());
+//                            Log.d("friendsName",friendsName.toString());
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
                     }
                 },

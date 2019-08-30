@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -23,16 +21,13 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Arrays;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String EMAIL = "email";
     public String URL;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -170,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 Map<String, String> responseHeaders = response.headers;
                 String rawCookies = responseHeaders.get("Set-Cookie");
+                Log.d("entered","entered");
                 Log.e("Login Cookie", "parseNetworkResponse: " + rawCookies);
                 editor.putString("cookies", rawCookies);
                 editor.apply();
@@ -196,22 +192,10 @@ public class MainActivity extends AppCompatActivity {
             finish();
             Log.d("contains", sharedPreferences.getString("accessToken", ""));
         }
+        else{
+            Log.d("Not present","Not present");
+        }
     }
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

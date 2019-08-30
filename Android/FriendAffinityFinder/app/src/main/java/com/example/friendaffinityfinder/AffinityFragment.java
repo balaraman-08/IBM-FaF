@@ -1,6 +1,7 @@
 package com.example.friendaffinityfinder;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,10 +9,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -36,6 +43,7 @@ public class AffinityFragment extends Fragment implements AffinityNotifier{
     private RecyclerView recyclerView;
 
     private OnFragmentInteractionListener mListener;
+    private SharedPreferences sharedPreferences;
 
     public AffinityFragment() {
         // Required empty public constructor
@@ -77,7 +85,20 @@ public class AffinityFragment extends Fragment implements AffinityNotifier{
         recyclerView = v.findViewById(R.id.recycler_friends);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new AffinityAdapter());
+        sharedPreferences = getActivity().getSharedPreferences("myPref",Context.MODE_PRIVATE);
+        try {
+            JSONArray affinityRank = new JSONArray(sharedPreferences.getString("affinityRank",""));
+            JSONObject friendsName = new JSONObject(sharedPreferences.getString("friendsName",""));
+            Log.e("affinityRank",affinityRank.toString());
+            Log.d("friendsName",friendsName.toString());
+
+
+            recyclerView.setAdapter(new AffinityAdapter(affinityRank,friendsName));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         return v;
     }
 

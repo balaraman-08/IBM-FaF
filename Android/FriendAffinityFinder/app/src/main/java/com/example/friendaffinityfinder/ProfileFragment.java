@@ -10,16 +10,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -80,6 +83,10 @@ public class ProfileFragment extends Fragment {
     private NeedsListAdapter needAdapter, valueAdapter;
     private LinearLayout analyse_ll;
     private TextView error_tv;
+    private Button analyse_btn;
+    private SharedPreferences.Editor editor;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -132,17 +139,39 @@ public class ProfileFragment extends Fragment {
         //finally initialize twitter with created configs
         Twitter.initialize(config);
 
+        //Getting values for personality
+        open_value = 0.7928032207775499 * 100;
+        diligence_value = 0.34284755466944594 * 100;
+        extra_value = 0.15961545962928608 * 100;
+        agree_value = 0.15032514588920376 * 100;
+        emotion_value = 0.5390207258387878 * 100;
+
+
         sharedPreferences = getActivity().getSharedPreferences("myPref", MODE_PRIVATE);
 
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         analyse_ll = v.findViewById(R.id.analysing_progress);
+        swipeRefreshLayout = v.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                analyse_ll.setVisibility(View.VISIBLE);
+                bigTraitsCard.setVisibility(View.GONE);
+                needCard.setVisibility(View.GONE);
+                valuesCard.setVisibility(View.GONE );
+                Log.d("swiped","swiped");
+                getMyAnalyse();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
         error_tv = v.findViewById(R.id.error_text);
         TextView username_tv = v.findViewById(R.id.username);
         username_tv.setText(sharedPreferences.getString("username", ""));
         CardView profileCard = v.findViewById(R.id.profilecard);
         profileCard.setBackgroundResource(R.drawable.heading_tags);
         bigTraitsCard = v.findViewById(R.id.progressCircles);
-        valuesCard = v.findViewById(R.id.values_card);
+            valuesCard = v.findViewById(R.id.values_card);
         twitterLogin = v.findViewById(R.id.addTwitter);
         twitterLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +180,8 @@ public class ProfileFragment extends Fragment {
             }
         });
         needCard = v.findViewById(R.id.need_card);
+        analyse_btn = v.findViewById(R.id.analysebutton);
+        editor = sharedPreferences.edit();
 
         needs = new JSONArray();
         values = new JSONArray();
@@ -168,7 +199,39 @@ public class ProfileFragment extends Fragment {
         valuesView.setHasFixedSize(true);
         valuesView.setAdapter(valueAdapter);
 
-        getMyAnalyse();
+        //To have a new analyse
+        analyse_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getMyAnalyse();
+            }
+        });
+
+        //If analysed data is present
+        if (sharedPreferences.contains("personalityValues")&&sharedPreferences.contains("needValues")&&sharedPreferences.contains("valueValues")) {
+            personalityThread();
+            bigTraitsCard.setVisibility(View.VISIBLE);
+            Log.d("data","present");
+            JSONArray needsArray = null, valuesArray = null;
+            try {
+                needsArray = new JSONArray(sharedPreferences.getString("needValues", ""));
+                valuesArray = new JSONArray(sharedPreferences.getString("valueValues", ""));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            needAdapter.updateList(needsArray);
+            valueAdapter.updateList(valuesArray);
+            analyse_ll.setVisibility(View.GONE);
+            needCard.setVisibility(View.GONE);
+            valuesCard.setVisibility(View.GONE);
+        }
+        else{
+            //If analysed data is not present
+            Log.d("data","No present");
+            getMyAnalyse();
+        }
+
+
 
         ImageView navitate_2_value = v.findViewById(R.id.navigate_value);
         ImageView navigatetoneed = v.findViewById(R.id.navigate_need);
@@ -205,13 +268,6 @@ public class ProfileFragment extends Fragment {
         pr_agreeableness = v.findViewById(R.id.progress_agree);
         pr_emotional = v.findViewById(R.id.progress_emotion);
 
-        //Getting values for personality
-        open_value = 0.7928032207775499 * 100;
-        diligence_value = 0.34284755466944594 * 100;
-        extra_value = 0.15961545962928608 * 100;
-        agree_value = 0.15032514588920376 * 100;
-        emotion_value = 0.5390207258387878 * 100;
-
         ///Progress Texts1
         open_txt = v.findViewById(R.id.pr_open_no);
         diligence_txt = v.findViewById(R.id.pr_diligence_no);
@@ -241,24 +297,31 @@ public class ProfileFragment extends Fragment {
                             values = response.getJSONArray("values");
                             personality = response.getJSONArray("personality");
 
+                            //Storing in Shared Preferences
+                            editor.putString("valueValues",values.toString());
+                            editor.putString("needValues",needs.toString());
+                            editor.putString("personalityValues",personality.toString());
+                            editor.apply();
+
                             analyse_ll.setVisibility(View.GONE);
                             needCard.setVisibility(View.GONE);
                             valuesCard.setVisibility(View.GONE);
                             bigTraitsCard.setVisibility(View.VISIBLE);
 
-                            open_value = personality.getJSONObject(0).getDouble("percentile") * 100;
-                            diligence_value = personality.getJSONObject(1).getDouble("percentile") * 100;
-                            extra_value = personality.getJSONObject(2).getDouble("percentile") * 100;
-                            agree_value = personality.getJSONObject(3).getDouble("percentile") * 100;
-                            emotion_value = personality.getJSONObject(4).getDouble("percentile") * 100;
+//                            open_value = personality.getJSONObject(0).getDouble("percentile") * 100;
+//                            diligence_value = personality.getJSONObject(1).getDouble("percentile") * 100;
+//                            extra_value = personality.getJSONObject(2).getDouble("percentile") * 100;
+//                            agree_value = personality.getJSONObject(3).getDouble("percentile") * 100;
+//                            emotion_value = personality.getJSONObject(4).getDouble("percentile") * 100;
 
                             //PersonalityThreadCalling
                             personalityThread();
 
-                            Log.e("Analyse", needs.toString() + '\n' + values.toString());
 
-                            needAdapter.updateList(needs);
-                            valueAdapter.updateList(values);
+                            JSONArray needsArray = new JSONArray(sharedPreferences.getString("needValues",""));
+                            JSONArray valuesArray = new JSONArray(sharedPreferences.getString("valueValues",""));
+                            needAdapter.updateList(needsArray);
+                            valueAdapter.updateList(valuesArray);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -350,6 +413,19 @@ public class ProfileFragment extends Fragment {
 
     private void personalityThread() {
         //Running threads for progress cirlces
+
+        JSONArray personalityArray = null;
+        try {
+            personalityArray = new JSONArray(sharedPreferences.getString("personalityValues",""));
+            open_value = personalityArray.getJSONObject(0).getDouble("percentile") * 100;
+            diligence_value = personalityArray.getJSONObject(1).getDouble("percentile") * 100;
+            extra_value = personalityArray.getJSONObject(2).getDouble("percentile") * 100;
+            agree_value = personalityArray.getJSONObject(3).getDouble("percentile") * 100;
+            emotion_value = personalityArray.getJSONObject(4).getDouble("percentile") * 100;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         //Openness thread
         new Thread(new Runnable() {

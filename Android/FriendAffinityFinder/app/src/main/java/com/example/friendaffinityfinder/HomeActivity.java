@@ -3,37 +3,39 @@ package com.example.friendaffinityfinder;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-public class HomeActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener, FriendsFragment.OnFragmentInteractionListener,SettingsFragment.OnFragmentInteractionListener, AffinityFragment.OnFragmentInteractionListener, Big5Fragment.OnFragmentInteractionListener{
+public class HomeActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener, FriendsFragment.OnFragmentInteractionListener, SettingsFragment.OnFragmentInteractionListener, AffinityFragment.OnFragmentInteractionListener, Big5Fragment.OnFragmentInteractionListener {
 
     BottomNavigationView navigation;
     Toolbar toolbar;
     TextView title;
     TwitterLoginButton twitterLoginButton;
-    String check="profile";
+    String check = "profile";
     FrameLayout frameLayout;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        twitterLoginButton =  findViewById(R.id.default_twitter_login_button);
+        twitterLoginButton = findViewById(R.id.default_twitter_login_button);
         frameLayout = findViewById(R.id.frame_container);
 
-            toolbar = findViewById(R.id.toolbar1);
+        toolbar = findViewById(R.id.toolbar1);
         title = findViewById(R.id.titletoolbar);
         BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
                 = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,8 +44,8 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
                 switch (item.getItemId()) {
                     case R.id.profile:
 
-                        if (!check.equals("profile")){
-                            check="profile";
+                        if (!check.equals("profile")) {
+                            check = "profile";
                             toolbar.setVisibility(View.GONE);
                             title.setText("Home");
                             loadFragment(new ProfileFragment());
@@ -51,16 +53,16 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
 
                         return true;
                     case R.id.friends:
-                        if (!check.equals("friends")){
-                            check="friends";
+                        if (!check.equals("friends")) {
+                            check = "friends";
                             title.setText("Friends");
                             toolbar.setVisibility(View.GONE);
                             loadFragment(new FriendsFragment());
                         }
                         return true;
                     case R.id.settings:
-                        if (!check.equals("settings")){
-                            check="settings";
+                        if (!check.equals("settings")) {
+                            check = "settings";
                             toolbar.setVisibility(View.VISIBLE);
                             title.setText("Settings");
                             loadFragment(new SettingsFragment());
@@ -82,25 +84,8 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
         transaction.disallowAddToBackStack();
         transaction.commit();
 
-
-//        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                if (dy > 0 && bottom_navigation.isShown()) {
-//                    bottom_navigation.setVisibility(View.GONE);
-//                } else if (dy < 0 ) {
-//                    bottom_navigation.setVisibility(View.VISIBLE);
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//
-//                super.onScrollStateChanged(recyclerView, newState);
-//            }
-//        });
     }
+
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -110,8 +95,22 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() { if (doubleBackToExitPressedOnce) {
         super.onBackPressed();
+        return;
+    }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+
+
     }
 
     @Override
@@ -126,11 +125,5 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
     }
 
 
-
-
-
-    private void accessPermission(){
-
-    }
 }
 

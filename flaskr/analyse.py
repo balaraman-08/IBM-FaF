@@ -185,7 +185,7 @@ def analyse_friends():
         'extraversionRank': sorted(extraversion, key=itemgetter('percentile'), reverse=True),
         'agreeablenessRank': sorted(agreeableness, key=itemgetter('percentile'), reverse=True),
         'neuroticismRank': sorted(neuroticism, key=itemgetter('percentile'), reverse=True),
-        'affinityRank': sorted(friendAffinity, key=itemgetter('affinity'), reversed=True),
+        'affinityRank': sorted(friendAffinity, key=itemgetter('affinity'), reverse=True),
         'consumption_preferences': consumptionPreferences,
         'friendsName': friends_list_with_name
     }
